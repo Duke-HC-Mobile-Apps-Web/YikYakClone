@@ -123,7 +123,6 @@ class PostTableViewController: UITableViewController, CLLocationManagerDelegate,
     private func alert(message : String) {
         let alert = UIAlertController(title: "Oops something went wrong.", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let action = UIAlertAction(title: "Ok", style: .Default, handler: nil)
-//        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         let settings = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
             let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
             if let url = settingsUrl {

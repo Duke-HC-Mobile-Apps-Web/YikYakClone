@@ -26,13 +26,13 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
     var yak: Yak?
     
     @IBAction func shareButtonPressed(sender: UIButton) {
-        // MARK: - TODO: Share Button
+        // TODO: Share Button (in class)
     }
     
     @IBAction func postButtonPressed(sender: UIButton) {
         let reply = Reply(text: replyTextField.text!, timestamp: NSDate(), location: nil)
         
-        //TODO: what to do with the reply?
+        // TODO: what to do with the reply?
         
         //resignFirstResponder hides the keyboard
         replyTextField.resignFirstResponder()
