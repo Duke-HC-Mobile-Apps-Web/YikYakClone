@@ -1,3 +1,19 @@
-# YikYakClone
-Version 2
+# Instructions for HW due 03/02
 
+In class we walked through saving/fetching Yak objects to/from Firebase.  YakCenter.swift contains all of the methods relating to saving and fetching Yaks, and the view controllers call on these methods as needed.  Here is how things work for saving and fetching Yaks:
+
+* `ComposeViewController.swift` has a function createNewYak which initializes a Yak.swift object, sets the instance variables and then calls `YakCenter.sharedInstance.postYak()` where the Yak is saved to Firebase
+* `PostTableViewController.swift` signs up to be the `YakFeedDelegate` which is a protocol found in `YakCenter` and notifies the `PostTableViewController` whenever there is a new Yak to be displayed.  This function is called `yakAddedToFeed` and all that the `PostTableViewController` needs to do to get the new data is reload the tableview, which gets the new data from the `YakCenter` via the `Yaks()` function found on line 116 of `PostTableViewController.swift`.
+
+
+##Assignment
+We'd like you to get replies working in the app.  Start by forking and cloning this repo.  You'll notice that new functions and a protocol were added to `YakCenter`.  They are:
+
+* subscribeToRepliesForYak
+	* This function sets up a listener for a Yak's replies.  In the same way we listen for new Yak's getting added to the feed, we want to listen to replies that get added to whatever Yak we are looking at. You shouldn't need to do anything with this function, as it is already being called from the DetailViewController, line 46.
+* postReply
+	* This function saves a reply to Firebase.  You'll need to figure out where in the app to call this.
+* ReplyFeedDelegate
+	* This protocol alerts whoever signs up to be the delegate whenever a reply gets added to the feed.  You'll need to figure out what view controller should sign up to be the delegate, and what action that view controller should take when `replyAddedToFeed` is called.  See how `YakFeedDelegate` is used for a hint.
+	
+So in summary: the `YakCenter` has already been setup to save and fetch Yak replies, your task is to have the appropriate view controller/s make use of these functions.
