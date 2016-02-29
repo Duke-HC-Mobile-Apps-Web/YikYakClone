@@ -17,3 +17,5 @@ We'd like you to get replies working in the app.  Start by forking this repo, an
 	* This protocol alerts whoever signs up to be the delegate whenever a reply gets added to the feed.  You'll need to figure out what view controller should sign up to be the delegate, and what action that view controller should take when `replyAddedToFeed` is called.  See how `YakFeedDelegate` is used for a hint.
 	
 In summary: the `YakCenter` has already been setup to save and fetch replies. Your task is to have the appropriate view controller/s make use of these functions, similar to how we implemented saving and fetching Yaks.
+
+Send your completed work back to us as a pull request
