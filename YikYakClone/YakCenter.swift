@@ -76,6 +76,8 @@ class YakCenter: NSObject {
                     yak.replies.append(Reply(dictionary: replySnapshot.value as! Dictionary<String, AnyObject>, snapshot: replySnapshot))
                 }
             }
+            //print(yak.replies.count)
+            //print("Noticed reply added")
             self.replyFeedDelegate?.replyAddedToFeed()
         })
     }

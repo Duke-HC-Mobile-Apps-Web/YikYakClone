@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate {
+class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate, ReplyFeedDelegate {
 
     @IBOutlet var yakTextView: UITextView!
     @IBOutlet var voteCountLabel: UILabel!
@@ -35,7 +35,6 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         // TODO: what to do with the reply?
         YakCenter.sharedInstance.postReply(reply, yak: yak!)
         
-        
         //resignFirstResponder hides the keyboard
         replyTextField.resignFirstResponder()
         replyTextField.text = ""
@@ -45,6 +44,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         super.viewDidLoad()
         replyTextField.autocorrectionType = .No
         
+        YakCenter.sharedInstance.replyFeedDelegate = self
         YakCenter.sharedInstance.subscribeToRepliesForYak(yak!)
         
         showYakInfo()
@@ -55,8 +55,6 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
 
         // Do any additional setup after loading the view.
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     func showYakInfo() {
@@ -65,6 +63,8 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         voteCountLabel.text = String(yak!.netVoteCount)
         timeLabel.text = yak?.timestampToReadable()
         
+        print(yak!.replies)
+        print(yak!.replies.count)
         let replyText = yak!.replies.count == 1 ? "1 Reply" : "\(yak!.replies.count) Replies"
         repliesLabel.text = replyText
     }
@@ -132,6 +132,8 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
     func replyAddedToFeed() {
         //the YakCenter told us that there are new replies available, so add them to the feed
         self.tableView.reloadData()
+        //print("Reloaded table view")
+        //self.showYakInfo()
     }
 
     
