@@ -83,13 +83,15 @@ class PostTableViewController: UITableViewController, CLLocationManagerDelegate,
     // MARK: - PostTableViewCell delegate
     
     func didUpvoteCellAtIndexPath(indexPath: NSIndexPath) {
-        yaks()[indexPath.row].netVoteCount += 1
+        let yak = yaks()[indexPath.row]
+        YakCenter.sharedInstance.voteOnYak(yak, upvote: true)
         let cell = tableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell
         cell?.voteCountLabel.text = String(yaks()[indexPath.row].netVoteCount)
     }
     
     func didDownvoteCellAtIndexPath(indexPath: NSIndexPath) {
-        yaks()[indexPath.row].netVoteCount -= 1
+        let yak = yaks()[indexPath.row]
+        YakCenter.sharedInstance.voteOnYak(yak, upvote: false)
         let cell = tableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell
         cell?.voteCountLabel.text = String(yaks()[indexPath.row].netVoteCount)
     }

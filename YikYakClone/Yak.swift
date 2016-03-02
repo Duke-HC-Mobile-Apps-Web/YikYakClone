@@ -34,7 +34,7 @@ class Yak: NSObject {
             self.timestamp = NSDate(timeIntervalSince1970:-1 * timeInterval!)
         }
         self.replies = [Reply]()
-        self.netVoteCount = 0
+        self.netVoteCount = dictionary["votes"] as! Int
         self.snapshot = snapshot
     }
     
