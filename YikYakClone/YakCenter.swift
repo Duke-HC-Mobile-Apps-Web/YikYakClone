@@ -33,15 +33,15 @@ class YakCenter: NSObject {
     var subscribedReplyHandle: UInt?
     
     //store a dictionary which keeps track of votes made locally
-    var voteDictionary: Dictionary<String, Int>
+    var voteDictionary: Dictionary<String, Bool>
     
     override init() {
         let voteRecord = NSUserDefaults.standardUserDefaults().objectForKey("voteRecord")
         if (voteRecord == nil){
-            self.voteDictionary = Dictionary<String, Int>()
+            self.voteDictionary = Dictionary<String, Bool>()
         }
         else{
-            self.voteDictionary = voteRecord as! Dictionary<String, Int>
+            self.voteDictionary = voteRecord as! Dictionary<String, Bool>
         }
         super.init()
         //we setup listeners for when remote data changes, this is the primary way of reading data via firebase
@@ -102,14 +102,9 @@ class YakCenter: NSObject {
     }
     
     func voteOnYak(yak: Yak, upvote: Bool){
-        let voteAmount = upvote ? 1 : -1
         //check to see if vote is eligible
-        var previousVoteAmount = 0
-        if (voteDictionary[yak.snapshot!.key] != nil){
-            previousVoteAmount = voteDictionary[yak.snapshot!.key]!
-        }
-        if (voteAmount != previousVoteAmount){
-            voteDictionary[yak.snapshot!.key] = voteAmount
+        if (voteDictionary[yak.snapshot!.key] == nil){
+            voteDictionary[yak.snapshot!.key] = true
             NSUserDefaults.standardUserDefaults().setObject(voteDictionary, forKey: "voteRecord")
             NSUserDefaults.standardUserDefaults().synchronize()
             
@@ -117,14 +112,12 @@ class YakCenter: NSObject {
             voteRef.runTransactionBlock({
                 (currentData: FMutableData!) in
                 let currentVotes = currentData.value as! Int
-                var newValue: Int
                 if (upvote){
-                    newValue = currentVotes + 1
+                    currentData.value = currentVotes + 1
                 }
                 else{
-                    newValue = currentVotes - 1
+                    currentData.value = currentVotes - 1
                 }
-                currentData.value = newValue - previousVoteAmount
                 return FTransactionResult.successWithValue(currentData)
             })
         }
