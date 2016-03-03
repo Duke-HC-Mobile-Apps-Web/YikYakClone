@@ -44,6 +44,7 @@ class YakCenter: NSObject {
                 }
             }
             self.yakFeedDelegate?.yakAddedToFeed()
+            //self.replyFeedDelegate?.replyAddedToFeed()
         })
     }
     
