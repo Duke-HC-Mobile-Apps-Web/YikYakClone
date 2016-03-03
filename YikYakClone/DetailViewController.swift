@@ -82,6 +82,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
     func replyAddedToFeed() {
         //the YakCenter told us that there are new replies available, so add them to the feed
         self.tableView.reloadData()
+        self.showYakInfo()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
