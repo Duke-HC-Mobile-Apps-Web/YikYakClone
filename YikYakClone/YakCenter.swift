@@ -32,7 +32,17 @@ class YakCenter: NSObject {
     
     var subscribedReplyHandle: UInt?
     
+    //store a dictionary which keeps track of votes made locally
+    var voteDictionary: Dictionary<String, Bool>
+    
     override init() {
+        let voteRecord = NSUserDefaults.standardUserDefaults().objectForKey("voteRecord")
+        if (voteRecord == nil){
+            self.voteDictionary = Dictionary<String, Bool>()
+        }
+        else{
+            self.voteDictionary = voteRecord as! Dictionary<String, Bool>
+        }
         super.init()
         //we setup listeners for when remote data changes, this is the primary way of reading data via firebase
         yakRef.queryOrderedByChild("timestamp").observeEventType(.Value, withBlock: { snapshot in
@@ -89,5 +99,27 @@ class YakCenter: NSObject {
         //we store replies under the id of the yak, then under a unique id for the reply
         let newReplyRef = replyRef.childByAppendingPath(yak.snapshot!.key).childByAutoId()
         newReplyRef.setValue(reply.toDictionary())
+    }
+    
+    func voteOnYak(yak: Yak, upvote: Bool){
+        //check to see if vote is eligible
+        if (voteDictionary[yak.snapshot!.key] == nil){
+            voteDictionary[yak.snapshot!.key] = true
+            NSUserDefaults.standardUserDefaults().setObject(voteDictionary, forKey: "voteRecord")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            
+            let voteRef = yakRef.childByAppendingPath(yak.snapshot!.key + "/votes")
+            voteRef.runTransactionBlock({
+                (currentData: FMutableData!) in
+                let currentVotes = currentData.value as! Int
+                if (upvote){
+                    currentData.value = currentVotes + 1
+                }
+                else{
+                    currentData.value = currentVotes - 1
+                }
+                return FTransactionResult.successWithValue(currentData)
+            })
+        }
     }
 }
