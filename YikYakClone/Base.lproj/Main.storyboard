@@ -575,6 +575,7 @@ so we are using UITextView</string>
                         <outlet property="tableView" destination="Rya-kc-3L6" id="rN0-GO-cg9"/>
                         <outlet property="timeLabel" destination="Fnw-Mw-2OL" id="cci-Wc-8f9"/>
                         <outlet property="voteCountLabel" destination="zJz-aJ-Ga2" id="xbI-nq-z2z"/>
+                        <outlet property="yakContainer" destination="bZx-tO-uHS" id="m8o-7M-xfI"/>
                         <outlet property="yakTextView" destination="DQc-ht-3Fm" id="jU7-sw-IEv"/>
                     </connections>
                 </viewController>

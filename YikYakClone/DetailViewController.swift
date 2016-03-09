@@ -16,6 +16,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
     @IBOutlet var repliesLabel: UILabel!
     @IBOutlet var replyTextField: UITextField!
     @IBOutlet var replyContainer: UIView!               //We use this to shift the reply box up when the keyboard is shown
+    @IBOutlet var yakContainer: UIView!                 //This view holds everything related to yak details
     
     @IBOutlet var tableView: UITableView! {
         didSet {
