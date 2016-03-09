@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate {
+class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate, ReplyFeedDelegate {
 
     @IBOutlet var yakTextView: UITextView!
     @IBOutlet var voteCountLabel: UILabel!
@@ -34,6 +34,8 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         
         // TODO: what to do with the reply?
         
+        YakCenter.sharedInstance.postReply(reply, yak: yak!)
+        
         //resignFirstResponder hides the keyboard
         replyTextField.resignFirstResponder()
         replyTextField.text = ""
@@ -46,6 +48,8 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         YakCenter.sharedInstance.subscribeToRepliesForYak(yak!)
         
         showYakInfo()
+        
+        YakCenter.sharedInstance.replyFeedDelegate = self
         
         //subscribe to notifications for when the keyboard appears and disappears
         //we use these notifications to shift the comment box up and down as needed
@@ -121,6 +125,12 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
             let cell = tableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell
             cell?.voteCountLabel.text = String(reply.netVoteCount)
         }
+    }
+    
+    // MARK: ReplyFeedDelegate
+    
+    func replyAddedToFeed() {
+        self.tableView.reloadData()
     }
     
     // MARK: keyboard
