@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0E092B33F65604BF035453AB /* Pods_YikYakClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835CC69464E1B3E52D81D22E /* Pods_YikYakClone.framework */; };
-		72A86D2F1C8F670B00337A64 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A86D2E1C8F670B00337A64 /* Social.framework */; };
 		72ED086C1C791E560096EF0C /* YakCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72ED086B1C791E560096EF0C /* YakCenter.swift */; };
 		830934D81C745F2100B659B9 /* ReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830934D71C745F2100B659B9 /* ReplyTableViewCell.swift */; };
 		830FF9C71C71B909003B9E87 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830FF9C61C71B909003B9E87 /* DetailViewController.swift */; };
@@ -25,7 +24,6 @@
 
 /* Begin PBXFileReference section */
 		484C33608F69476D559BD7BB /* Pods-YikYakClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YikYakClone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YikYakClone/Pods-YikYakClone.debug.xcconfig"; sourceTree = "<group>"; };
-		72A86D2E1C8F670B00337A64 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		72ED086B1C791E560096EF0C /* YakCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YakCenter.swift; sourceTree = "<group>"; };
 		830934D71C745F2100B659B9 /* ReplyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyTableViewCell.swift; path = ../ReplyTableViewCell.swift; sourceTree = "<group>"; };
 		830FF9C61C71B909003B9E87 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -49,7 +47,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72A86D2F1C8F670B00337A64 /* Social.framework in Frameworks */,
 				0E092B33F65604BF035453AB /* Pods_YikYakClone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -60,7 +57,6 @@
 		3554940919A88EB40F99F74E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				72A86D2E1C8F670B00337A64 /* Social.framework */,
 				835CC69464E1B3E52D81D22E /* Pods_YikYakClone.framework */,
 			);
 			name = Frameworks;
