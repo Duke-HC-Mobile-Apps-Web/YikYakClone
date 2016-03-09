@@ -33,19 +33,31 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         let reply = Reply(text: replyTextField.text!, timestamp: NSDate(), location: nil)
         
         // TODO: what to do with the reply?
+        YakCenter.sharedInstance.postReply(reply, yak: yak!)
+        replyTextField.text = reply.text
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        //YakCenter.sharedInstance.replyFeedDelegate = self
+        
         
         //resignFirstResponder hides the keyboard
         replyTextField.resignFirstResponder()
         replyTextField.text = ""
     }
     
+    func replyAddedToFeed() {
+        //the YakCenter told us that there are new yaks available, so add them to the feed
+        self.tableView.reloadData()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         replyTextField.autocorrectionType = .No
         
         YakCenter.sharedInstance.subscribeToRepliesForYak(yak!)
-        
         showYakInfo()
+        
         
         //subscribe to notifications for when the keyboard appears and disappears
         //we use these notifications to shift the comment box up and down as needed
@@ -64,6 +76,8 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         let replyText = yak!.replies.count == 1 ? "1 Reply" : "\(yak!.replies.count) Replies"
         repliesLabel.text = replyText
     }
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         navigationController?.toolbar.hidden = true
