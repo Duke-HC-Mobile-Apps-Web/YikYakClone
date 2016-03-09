@@ -87,6 +87,7 @@ class YakCenter: NSObject {
     
     func postReply(reply: Reply, yak: Yak){
         //we store replies under the id of the yak, then under a unique id for the reply
+        print("posted")
         let newReplyRef = replyRef.childByAppendingPath(yak.snapshot!.key).childByAutoId()
         newReplyRef.setValue(reply.toDictionary())
     }

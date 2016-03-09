@@ -110,6 +110,7 @@ class PostTableViewController: UITableViewController, CLLocationManagerDelegate,
     
     func yakAddedToFeed() {
         //the YakCenter told us that there are new yaks available, so add them to the feed
+        print("yak post")
         self.tableView.reloadData()
     }
     
