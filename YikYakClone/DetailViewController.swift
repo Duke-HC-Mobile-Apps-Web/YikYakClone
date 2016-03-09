@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate {
+class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate, ReplyFeedDelegate {
 
     @IBOutlet var yakTextView: UITextView!
     @IBOutlet var voteCountLabel: UILabel!
@@ -16,6 +16,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
     @IBOutlet var repliesLabel: UILabel!
     @IBOutlet var replyTextField: UITextField!
     @IBOutlet var replyContainer: UIView!               //We use this to shift the reply box up when the keyboard is shown
+    
     
     @IBOutlet var tableView: UITableView! {
         didSet {
@@ -33,6 +34,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         let reply = Reply(text: replyTextField.text!, timestamp: NSDate(), location: nil)
         
         // TODO: what to do with the reply?
+        YakCenter.sharedInstance.postReply(reply, yak: yak!)
         
         //resignFirstResponder hides the keyboard
         replyTextField.resignFirstResponder()
@@ -43,6 +45,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         super.viewDidLoad()
         replyTextField.autocorrectionType = .No
         
+        YakCenter.sharedInstance.replyFeedDelegate = self 
         YakCenter.sharedInstance.subscribeToRepliesForYak(yak!)
         
         showYakInfo()
@@ -140,6 +143,10 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         replyContainer.transform = CGAffineTransformIdentity
     }
     
+    func replyAddedToFeed() {
+        self.tableView.reloadData()
+        self.replyContainer.reloadInputViews()
+    }
     /*
     // MARK: - Navigation
 
