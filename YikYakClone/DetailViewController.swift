@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate {
+class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate, ReplyFeedDelegate {
 
     @IBOutlet var yakTextView: UITextView!
     @IBOutlet var voteCountLabel: UILabel!
@@ -33,7 +33,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         let reply = Reply(text: replyTextField.text!, timestamp: NSDate(), location: nil)
         
         // TODO: what to do with the reply?
-        
+        YakCenter.sharedInstance.postReply(reply, yak: yak!)
         //resignFirstResponder hides the keyboard
         replyTextField.resignFirstResponder()
         replyTextField.text = ""
@@ -41,18 +41,20 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         replyTextField.autocorrectionType = .No
-        
         YakCenter.sharedInstance.subscribeToRepliesForYak(yak!)
         
         showYakInfo()
-        
+
         //subscribe to notifications for when the keyboard appears and disappears
         //we use these notifications to shift the comment box up and down as needed
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
 
         // Do any additional setup after loading the view.
+        YakCenter.sharedInstance.replyFeedDelegate = self
+
     }
     
     func showYakInfo() {
@@ -138,6 +140,10 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
     
     func keyboardWillDisappear(notification: NSNotification){
         replyContainer.transform = CGAffineTransformIdentity
+    }
+    
+    func replyAddedToFeed() {
+        self.tableView.reloadData()
     }
     
     /*
