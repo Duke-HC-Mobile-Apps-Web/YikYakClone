@@ -29,6 +29,8 @@ class PostTableViewController: UITableViewController, CLLocationManagerDelegate,
         
         //set ourselves to be the yak feed delegate, so we get notified when yaks are added
         YakCenter.sharedInstance.yakFeedDelegate = self
+
+        
         
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -56,11 +58,13 @@ class PostTableViewController: UITableViewController, CLLocationManagerDelegate,
         cell.delegate = self
         cell.indexPath = indexPath
         
+        
         //access the yak for this tableview row
         let yak = yaks()[indexPath.row]
         cell.textView.text = yak.text
         
         cell.timeLabel.text = yak.timestampToReadable()
+        
         
         if yak.replies.count > 0 {
             cell.repliesLabel.text = "💬 \(yak.replies.count) Replies"
