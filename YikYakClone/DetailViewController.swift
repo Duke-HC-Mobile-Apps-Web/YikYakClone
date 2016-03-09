@@ -8,6 +8,7 @@
 
 import UIKit
 import Social
+import MessageUI
 
 class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate {
 
@@ -38,13 +39,25 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
             self.shareToService(SLServiceTypeFacebook)
         }
         
+        let messageAction = UIAlertAction(title: "Message", style: .Default) { action in
+            if (MFMessageComposeViewController.canSendText()){
+                let messageVC = MFMessageComposeViewController()
+                messageVC.body = "Check out this Yak: \"\(self.yak!.text)\""
+                self.presentViewController(messageVC, animated: true, completion: nil)
+            }
+        }
+        
         let copyAction = UIAlertAction(title: "Copy To Clipboard", style: .Default) { action in
             UIPasteboard.generalPasteboard().setValue(self.yak!.text, forPasteboardType: "public.text")
         }
         
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        
         alertSheet.addAction(tweetAction)
         alertSheet.addAction(facebookAction)
+        alertSheet.addAction(messageAction)
         alertSheet.addAction(copyAction)
+        alertSheet.addAction(cancelAction)
         
         self.presentViewController(alertSheet, animated: true, completion: nil)
     }
