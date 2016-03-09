@@ -1,4 +1,4 @@
-# Instructions for HW due 03/09
+# Instructions for HW due 03/04
 
 In class we walked through saving/fetching Yak objects to/from Firebase.  YakCenter.swift contains all of the methods related to saving and fetching Yaks, and the view controllers call these methods as needed.  Here is how things work for saving and fetching Yaks:
 
