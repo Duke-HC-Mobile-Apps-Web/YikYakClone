@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Social
 
 class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate {
 
@@ -27,7 +28,36 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
     var yak: Yak?
     
     @IBAction func shareButtonPressed(sender: UIButton) {
-        // TODO: Share Button (in class)
+        let alertSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let tweetAction = UIAlertAction(title: "Twitter", style: .Default) { action in
+            self.shareToService(SLServiceTypeTwitter)
+        }
+        
+        let facebookAction = UIAlertAction(title: "Facebook", style: .Default) { action in
+            self.shareToService(SLServiceTypeFacebook)
+        }
+        
+        let copyAction = UIAlertAction(title: "Copy To Clipboard", style: .Default) { action in
+            UIPasteboard.generalPasteboard().setValue(self.yak!.text, forPasteboardType: "public.text")
+        }
+        
+        alertSheet.addAction(tweetAction)
+        alertSheet.addAction(facebookAction)
+        alertSheet.addAction(copyAction)
+        
+        self.presentViewController(alertSheet, animated: true, completion: nil)
+    }
+    
+    func shareToService(service: String){
+        let socialVC = SLComposeViewController(forServiceType: service)
+        socialVC.setInitialText("Check out this Yak: \"\(self.yak!.text)\"")
+        UIGraphicsBeginImageContext(self.yakContainer.frame.size)
+        self.yakContainer.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let yakImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        socialVC.addImage(yakImage)
+        self.presentViewController(socialVC, animated: true, completion: nil)
     }
     
     @IBAction func postButtonPressed(sender: UIButton) {
