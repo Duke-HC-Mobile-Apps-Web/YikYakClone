@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate {
+class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate, ReplyFeedDelegate {
 
     @IBOutlet var yakTextView: UITextView!
     @IBOutlet var voteCountLabel: UILabel!
@@ -33,16 +33,20 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         let reply = Reply(text: replyTextField.text!, timestamp: NSDate(), location: nil)
         
         // TODO: what to do with the reply?
+        print("ii tried to post")
+        YakCenter.sharedInstance.postReply(reply, yak: yak!);
         
         //resignFirstResponder hides the keyboard
         replyTextField.resignFirstResponder()
         replyTextField.text = ""
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         replyTextField.autocorrectionType = .No
         
+        YakCenter.sharedInstance.replyFeedDelegate = self
         YakCenter.sharedInstance.subscribeToRepliesForYak(yak!)
         
         showYakInfo()
@@ -138,6 +142,13 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
     
     func keyboardWillDisappear(notification: NSNotification){
         replyContainer.transform = CGAffineTransformIdentity
+    }
+    
+    func replyAddedToFeed() {
+        //the YakCenter told us that there are new replies available, so add them to the feed
+        print("hi")
+        self.replyContainer.reloadInputViews()
+        self.tableView.reloadData()
     }
     
     /*
