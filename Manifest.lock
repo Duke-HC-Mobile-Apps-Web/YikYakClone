@@ -1,0 +1,13 @@
+PODS:
+  - Firebase (2.5.1)
+  - KMPlaceholderTextView (1.1.1)
+
+DEPENDENCIES:
+  - Firebase (>= 2.5.0)
+  - KMPlaceholderTextView
+
+SPEC CHECKSUMS:
+  Firebase: 3565ea88b830f28f2c77ecc524622bc71a20d085
+  KMPlaceholderTextView: 686edec818f5727728eaf8c2e9e70177692d3d53
+
+COCOAPODS: 0.39.0
