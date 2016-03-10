@@ -17,6 +17,7 @@ protocol ReplyFeedDelegate{
     func replyAddedToFeed()
 }
 
+
 class YakCenter: NSObject {
     static let sharedInstance = YakCenter()
     var yakFeedDelegate: YakFeedDelegate?
