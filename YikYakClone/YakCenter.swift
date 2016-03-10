@@ -9,11 +9,11 @@
 import UIKit
 import Firebase
 
-protocol YakFeedDelegate{
+protocol YakFeedDelegate {
     func yakAddedToFeed()
 }
 
-protocol ReplyFeedDelegate{
+protocol ReplyFeedDelegate {
     func replyAddedToFeed()
 }
 
