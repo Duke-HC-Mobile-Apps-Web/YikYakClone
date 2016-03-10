@@ -68,6 +68,12 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+//    func createNewReply(text: String) {
+//        let newReply = Reply(text: text, timestamp: NSDate(), location: nil)
+//        YakCenter.sharedInstance.postReply(newReply)
+//        self.dismissViewControllerAnimated(true, completion: nil)
+//    }
+    
     // MARK: - Private functions
     
     private func alert(message : String) {
