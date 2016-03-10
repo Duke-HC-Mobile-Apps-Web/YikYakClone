@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate {
+class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate, ReplyFeedDelegate {
 
     @IBOutlet var yakTextView: UITextView!
     @IBOutlet var voteCountLabel: UILabel!
@@ -33,6 +33,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         let reply = Reply(text: replyTextField.text!, timestamp: NSDate(), location: nil)
         
         // TODO: what to do with the reply?
+        YakCenter.sharedInstance.postReply(reply, yak: yak!)
         
         //resignFirstResponder hides the keyboard
         replyTextField.resignFirstResponder()
@@ -42,8 +43,9 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         replyTextField.autocorrectionType = .No
-        
+        YakCenter.sharedInstance.replyFeedDelegate = self
         YakCenter.sharedInstance.subscribeToRepliesForYak(yak!)
+ 
         
         showYakInfo()
         
@@ -121,6 +123,10 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
             let cell = tableView.cellForRowAtIndexPath(indexPath) as? PostTableViewCell
             cell?.voteCountLabel.text = String(reply.netVoteCount)
         }
+    }
+    
+    func replyAddedToFeed() {
+        
     }
     
     // MARK: keyboard
