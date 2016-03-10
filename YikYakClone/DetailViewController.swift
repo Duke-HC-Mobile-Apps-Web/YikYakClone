@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Social
 
-class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate {
+class DetailViewController: UIViewController, UITableViewDataSource, PostTableViewCellDelegate, ReplyFeedDelegate {
 
     @IBOutlet var yakTextView: UITextView!
     @IBOutlet var voteCountLabel: UILabel!
@@ -26,22 +27,41 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
     var yak: Yak?
     
     @IBAction func shareButtonPressed(sender: UIButton) {
-        // TODO: Share Button (in class)
+        
+        let alertSheet = UIAlertController (title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let copyAction = UIAlertAction(title: "Copy to Clipboard", style:.Default) { action in
+            UIPasteboard.generalPasteboard().setValue(self.yak!.text, forPasteboardType: "public.text")
+        }
+            
+            alertSheet.addAction(copyAction)
+            self.presentViewController(alertSheet, animated: true, completion: nil)
+            
+       
     }
     
     @IBAction func postButtonPressed(sender: UIButton) {
         let reply = Reply(text: replyTextField.text!, timestamp: NSDate(), location: nil)
         
+        YakCenter.sharedInstance.postReply(reply, yak: self.yak!)
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
         // TODO: what to do with the reply?
+        
         
         //resignFirstResponder hides the keyboard
         replyTextField.resignFirstResponder()
         replyTextField.text = ""
     }
+        
+        
     
     override func viewDidLoad() {
         super.viewDidLoad()
         replyTextField.autocorrectionType = .No
+        
+        YakCenter.sharedInstance.replyFeedDelegate = self
         
         YakCenter.sharedInstance.subscribeToRepliesForYak(yak!)
         
@@ -102,6 +122,10 @@ class DetailViewController: UIViewController, UITableViewDataSource, PostTableVi
         cell.voteCountLabel.text = String(reply.netVoteCount)
         
         return cell
+    }
+    
+    func replyAddedToFeed() {
+        self.tableView.reloadData()
     }
     
     // MARK: - PostTableViewCell delegate
