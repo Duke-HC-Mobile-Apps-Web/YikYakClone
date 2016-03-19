@@ -113,6 +113,11 @@ class PostTableViewController: UITableViewController, CLLocationManagerDelegate,
         self.tableView.reloadData()
     }
     
+    func replyAddedToFeed() {
+        //the YakCenter told us that there are new yaks available, so add them to the feed
+        self.tableView.reloadData()
+    }
+    
     func yaks() -> [Yak]{
         //this function just pulls all of the yaks from the YakCenter
         return YakCenter.sharedInstance.allYaks
